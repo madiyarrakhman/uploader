@@ -24,6 +24,8 @@ class AppConfig
             } else {
                 throw new \Exception("Env file do not be empty.");
             }
+        } else {
+            throw new \Exception("Env file do not found.");
         }
         return self::$env;
     }
