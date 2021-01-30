@@ -4,6 +4,8 @@
 namespace App\components;
 
 
+use App\Config\AppConfig;
+
 class User
 {
     const username = 'eldos';
@@ -22,7 +24,11 @@ class User
     {
         if (array_key_exists('user', $_SESSION)) {
             if (array_key_exists('logged', $_SESSION['user'])) {
-                return $_SESSION['user']['logged'];
+                if ($_SESSION['user']['logged'] === self::loggedHash()) {
+                    return true;
+                } else {
+                    return false;
+                }
             } else {
                 return false;
             }
@@ -33,17 +39,22 @@ class User
 
     public function validate()
     {
-        if (($this->username === self::username) && ($this->password === self::password)) {
+        if (($this->username === AppConfig::get('USERNAME')) && ($this->password === AppConfig::get('PASSWORD'))) {
             return true;
         } else {
             return false;
         }
     }
 
+    private static function loggedHash()
+    {
+        return md5(AppConfig::get('USERNAME') . AppConfig::get('APP_SALT') . AppConfig::get('PASSWORD'));
+    }
+
     public function logging()
     {
         if ($this->validate()) {
-            $_SESSION['user']['logged'] = true;
+            $_SESSION['user']['logged'] = self::loggedHash();
             return true;
         } else {
             $_SESSION['user']['logged'] = false;
