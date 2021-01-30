@@ -1,0 +1,16 @@
+{
+    "name": "madiyarrakhman/price-uploader",
+    "authors": [
+        {
+            "name": "Rakhman Madiyar",
+            "email": "6253179m@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    }
+}
